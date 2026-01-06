@@ -1,0 +1,5 @@
+{
+  "name": "RigAlpha SCADA",
+  "description": "A futuristic industrial SCADA dashboard for monitoring rig telemetry, diagnostics, and system health.",
+  "requestFramePermissions": []
+}
