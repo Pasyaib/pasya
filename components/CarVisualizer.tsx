@@ -9,6 +9,8 @@ interface CarVisualizerProps {
 
 const CarVisualizer: React.FC<CarVisualizerProps> = ({ metrics, steeringAngle = 0 }) => {
   const [imageStatus, setImageStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
+  // Use a fixed timestamp for this session to bust cache if the file was just replaced
+  const [timestamp] = useState(Date.now());
 
   const tirePressure = metrics.find(m => m.name === 'Tire Pressure')?.value || 22.1;
   const engineTemp = metrics.find(m => m.name === 'Engine Temp')?.value || 112;
@@ -37,11 +39,16 @@ const CarVisualizer: React.FC<CarVisualizerProps> = ({ metrics, steeringAngle = 
         )}
 
         {/* The Image */}
+        {/* We use filters to invert typical black-on-white wireframes to white-on-black */}
         <img 
-          src="/f1_wireframe.png" 
+          src={`/f1_wireframe.png?t=${timestamp}`} 
           alt="F1 Chassis" 
-          className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] mix-blend-screen transition-opacity duration-500 ${imageStatus === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
-          style={{ maxHeight: '85vh' }}
+          className={`w-full h-full object-contain transition-opacity duration-500 ${imageStatus === 'loaded' ? 'opacity-100' : 'opacity-0'}`}
+          style={{ 
+            maxHeight: '85vh',
+            filter: 'invert(1) grayscale(1) brightness(1.2) contrast(1.1)',
+            mixBlendMode: 'screen'
+          }}
           onLoad={() => setImageStatus('loaded')}
           onError={() => setImageStatus('error')}
         />
@@ -52,17 +59,16 @@ const CarVisualizer: React.FC<CarVisualizerProps> = ({ metrics, steeringAngle = 
              <ImageOff className="w-12 h-12 text-zinc-600 mb-4" />
              <p className="text-zinc-400 font-mono text-xs">Wireframe Asset Missing</p>
              <p className="text-zinc-600 font-mono text-[10px] mt-2 max-w-[200px] text-center">
-               Ensure <code>f1_wireframe.png</code> exists in your <code>/public</code> directory.
+               Ensure <code>f1_wireframe.png</code> is in your <code>/public</code> folder.
              </p>
           </div>
         )}
 
         {/* --- DYNAMIC OVERLAYS --- */}
-        {/* Only show overlays if loaded or loading (to prevent jumping, though usually hide on error) */}
         {imageStatus !== 'error' && (
           <>
             {/* Front Axle Area (Approx 22% from top for standard F1 top-down) */}
-            <div className="absolute top-[22%] left-0 w-full flex justify-between px-[12%] pointer-events-none">
+            <div className="absolute top-[22%] left-0 w-full flex justify-between px-[10%] pointer-events-none">
                 {/* Left Wheel Data */}
                 <div className="relative">
                     {/* Brake Glow */}
@@ -95,7 +101,7 @@ const CarVisualizer: React.FC<CarVisualizerProps> = ({ metrics, steeringAngle = 
             </div>
 
             {/* Rear Axle Area (Approx 78% from top) */}
-            <div className="absolute top-[78%] left-0 w-full flex justify-between px-[12%] pointer-events-none">
+            <div className="absolute top-[78%] left-0 w-full flex justify-between px-[10%] pointer-events-none">
                 <div className="text-right pr-6 relative">
                      <div className="text-[10px] font-mono text-white bg-black/50 backdrop-blur-sm px-1 border-r-2 border-scada-green inline-block">{tirePressure} PSI</div>
                 </div>
