@@ -29,31 +29,31 @@ const Header: React.FC = () => {
   }, []);
 
   const formatTime = (date: Date) => {
-    return date.toISOString().replace('T', ' ').substring(0, 19);
+    return date.toISOString().replace('T', ' ').substring(11, 19);
   };
 
   return (
     <header className="h-12 border-b border-scada-border bg-black flex items-center justify-between px-6 select-none">
       <div className="flex items-center gap-8">
         <h1 className="text-sm font-mono font-bold tracking-tight text-white uppercase">
-          Rig Alpha // <span className="text-scada-text font-normal">Dashboard</span>
+          Hyperion F1 // <span className="text-scada-text font-normal">Trackside</span>
         </h1>
         
         <div className="hidden md:flex items-center gap-6 border-l border-scada-border pl-6 h-6">
-          <StatusItem label="SYSTEM" status="good" />
-          <StatusItem label="NET" status="good" />
-          <StatusItem label="PWR" status="warn" />
-          <StatusItem label="SEC" status="good" />
+          <StatusItem label="P-UNIT" status="good" />
+          <StatusItem label="AERO" status="good" />
+          <StatusItem label="HYDRA" status="bad" />
+          <StatusItem label="TIRES" status="warn" />
         </div>
       </div>
 
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2 text-scada-red animate-pulse">
             <Activity size={14} />
-            <span className="text-xs font-bold tracking-wider">7 ALERTS</span>
+            <span className="text-xs font-bold tracking-wider">BOX BOX</span>
         </div>
         <div className="text-xs font-mono text-scada-text">
-          {formatTime(time)}
+          T-MINUS {formatTime(time)}
         </div>
       </div>
     </header>

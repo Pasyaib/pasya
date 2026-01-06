@@ -12,7 +12,7 @@ export interface SystemMetric {
   unit: string;
   status: Status;
   alarms: number;
-  uptimeHours: number;
+  subValue: string;
 }
 
 export interface TelemetryPoint {
@@ -51,4 +51,16 @@ export interface AlarmItem {
   message: string;
   code: string;
   acknowledged: boolean;
+}
+
+export interface LapData {
+  lap: number;
+  s1: string;
+  s2: string;
+  s3: string;
+  lapTime: string;
+  tyre: string;
+  s1Status: 'purple' | 'green' | 'yellow' | 'normal';
+  s2Status: 'purple' | 'green' | 'yellow' | 'normal';
+  s3Status: 'purple' | 'green' | 'yellow' | 'normal';
 }

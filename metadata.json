@@ -1,5 +1,5 @@
 {
-  "name": "RigAlpha SCADA",
-  "description": "A futuristic industrial SCADA dashboard for monitoring rig telemetry, diagnostics, and system health.",
+  "name": "Hyperion F1 Telemetry",
+  "description": "Real-time F1 supercar telemetry and diagnostics dashboard.",
   "requestFramePermissions": []
 }
